@@ -44,7 +44,7 @@ def load_svd(path: str):
 # -----------------------------
 @st.cache_data(show_spinner=False)
 def get_stemmed_mapping(text_list):
-    with open("E:\\DOWNLOAD\\stem_cache.json", 'r') as f:
+    with open("stem_cache.json", 'r') as f:
         static_cache = json.load(f)
     
     stemmer = StemmerFactory().create_stemmer()
@@ -315,19 +315,19 @@ if file:
             # 2/5: Transformasi TF-IDF
             status_text.text("2/5: Transformasi TF-IDF...")
             valid_mask = df_sel['Cleaned'].notna()
-            tfidf = load_tfidf("E:\\DOWNLOAD\\tfidf_erep.joblib")
+            tfidf = load_tfidf("tfidf_erep.joblib")
             tfidf_m = tfidf.transform(df_sel.loc[valid_mask, 'Cleaned'].tolist())
             progress_bar.progress(40)
 
             # 3/5: Reduksi dimensi dengan SVD
             status_text.text("3/5: Reduksi dimensi dengan SVD...")
-            svd = load_svd("E:\\DOWNLOAD\\svd_erep.joblib")
+            svd = load_svd("svd_erep.joblib")
             svd_f = svd.transform(tfidf_m)
             progress_bar.progress(60)
 
             # 4/5: Prediksi pakai TFLite
             status_text.text("4/5: Memprediksi label (TFLite)...")
-            tflite_path = "E:\\DOWNLOAD\\akurasi_81.tflite"  # <-- Ganti dengan path sebenarnya
+            tflite_path = "akurasi_81.tflite"  # <-- Ganti dengan path sebenarnya
             interpreter = load_tflite_interpreter(tflite_path)
             input_details = interpreter.get_input_details()
             output_details = interpreter.get_output_details()
