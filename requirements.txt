@@ -7,4 +7,5 @@ Sastrawi==1.0.1
 requests
 streamlit
 openpyxl
-xlsxwriter
+XlsxWriter
+tensorflow==2.18.0
